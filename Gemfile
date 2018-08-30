@@ -45,3 +45,6 @@ group :test do
   gem 'faker'
   gem 'shoulda-matchers'
 end
+
+# use knock for token authentication. https://github.com/nsarno/knock
+gem 'knock'

@@ -1,29 +1,31 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:update, :destroy, :show]
   before_action :set_user, only: [:update, :destroy, :show]
+
   def create
     @user = User.new(user_params)
      if @user.save
-       "Account created"
+       render json: user_profile(@user)  
      else
-       "Invalid inputs"
+       render json: @user.errors.messages, status: :bad_request 
      end
   end
 
   def show
-    @user
+    render json: user_profile(@user)
   end
 
   def destroy
    if @user.destroy!
-     "Account deleted"
+     render status: :no_content 
    end
   end
 
   def update
     if @user.update(user_params)
-      "Account updated"
+      render json: user_profile(@user)
     else
-      "Invalid inputs"
+      render json: @user.error.messages, status: :bad_request
     end
   end
 
@@ -32,6 +34,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email,
+      :name,
       :phone,
       :password,
       :password_confirmation
@@ -40,5 +43,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = current_user
+  end
+
+  # filter user parameters
+  def user_profile(user)
+    profile = user.slice(:id, :name, :email, :phone)
   end
 end
