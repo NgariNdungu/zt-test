@@ -1,0 +1,168 @@
+openapi: 3.0.0
+
+info:
+  title: ZegeTech Test API
+  version: 0.0.1
+  description: A demo API where users can send money between themselves
+  
+servers:
+  - url: https://blooming-beyond-39530.herokuapp.com
+    description: Testing server
+
+security:
+  - BearerAuth: []
+  
+paths:
+  /users:
+    get:
+      summary: Get user details
+      
+      responses:
+        '200':
+          description: The authorized user
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+          
+    post:
+      summary: Create a new user
+      security: []
+      responses:
+        '201':
+          description: The created user
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+    
+    delete:
+      summary: Delete user account
+      responses:
+        '204':
+          description: Account successfully deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  
+  /deposits:
+    post:
+      summary: Deposit into user wallet
+      responses:
+        '200':
+          description: Amount credited
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+    get:
+      summary: Get deposit history
+      responses:
+        '200':
+          description: List of user deposits
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+          
+  /transfers:
+    post:
+      summary: Send money
+      responses:
+        '200':
+          description: Money sent
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '400':
+          description: Insufficient balance
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+    get:
+      summary: Request transaction history
+      responses:
+        '202':
+          description: Request received, email will follow
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  
+  /authorize:
+    post:
+      summary: Request authorization
+      security: []
+      responses:
+        '201':
+          description: Token created
+        '401':
+          description: Invalid account credentials/wrong parameters provided
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+          format: password
+        password_confirmation:
+          type: string
+          format: password
+      required:
+        - email
+        - password
+        - phone
+        - password_confirmation
+        
+    Transaction:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The number to send money to
+        amount:
+          type: integer
+      required:
+        - email
+        - amount
+        
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      
+  responses:
+    Unauthorized:
+      description: Access token is missing or invalid
