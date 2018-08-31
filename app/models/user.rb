@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # https://www.sitepoint.com/community/t/referencing-the-same-model-twice-in-rails/254243/2
   has_many :sends, class_name: "Transfer", foreign_key: "sender_id"
   has_many :receipts, class_name: "Transfer", foreign_key: "recipient_id"
-  has_many :deposits 
+  has_many :deposits # todo: handle user deletion 
 
   # validations
   validates :email, :phone, :password_digest, presence: true

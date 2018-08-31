@@ -1,24 +1,15 @@
-# README
+This repo contains code for a demo API developed in rails. The server is deployed on Heroku [here](https://blooming-beyond-39530.herokuapp.com)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The OpenAPI specification *zt-test.yml* is written using [Swagger](https://swagger.io)
 
-Things you may want to cover:
 
-* Ruby version
+> [Postman collection](https://www.getpostman.com/collections/57d19bbfac01ce15f226)
 
-* System dependencies
+### Stack
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Ruby 2.3.5
+- Rails 5
+- Postgres 9.5
+- Gems
+  - [knock](https://github.com/nsarno/knock) for token authentication
+  - Bcrypt

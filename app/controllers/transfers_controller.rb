@@ -11,6 +11,7 @@ class TransfersController < ApplicationController
       return
     end
     amount = params[:amount] # if current_user.balance > params[:amount].to_i 
+    # todo: handle case when @recipient is nil
     @transfer = current_user.sends.new(
       'recipient_id': @recipient.id,
       'amount': amount
