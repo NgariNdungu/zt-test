@@ -5,5 +5,6 @@ class Transfer < ApplicationRecord
 
   # validations
   validates :sender_id, :recipient_id, :amount, presence: true
-  validates :amount, numericality: {only_integer: true}
+  validates :amount, numericality: { only_integer: true }
+  validates :amount, numericality: { less_than: self.sender.balance }
 end
