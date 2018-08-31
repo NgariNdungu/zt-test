@@ -8,7 +8,7 @@ class DepositsController < ApplicationController
   def create
     @deposit = current_user.deposits.new(deposit_params)
     if @deposit.save
-      render json: @deposit
+      render json: build_deposit([@deposit])
     else
       render json: @deposit.errors.messages 
     end  
