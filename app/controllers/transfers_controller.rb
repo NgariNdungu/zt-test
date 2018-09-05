@@ -18,6 +18,8 @@ class TransfersController < ApplicationController
     )
     if @transfer.save
       render json: @transfer
+      # send confirmation email
+      TransfersMailer.with(transfer: @transfer).transfer_notification.deliver_later
     else
       render json: @transfer.errors.messages, status: :bad_request
     end
@@ -25,6 +27,7 @@ class TransfersController < ApplicationController
 
   def index
     # method should send email of user transfers
+    TransfersMailer.with(user: current_user).transaction_summary.deliver_later
     render json: { "message": "Email sent" }, status: :accepted
   end
 
