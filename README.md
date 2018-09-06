@@ -5,6 +5,10 @@ The OpenAPI specification *zt-test.yml* is written using [Swagger](https://swagg
 
 > [Postman collection](https://www.getpostman.com/collections/57d19bbfac01ce15f226)
 
+### Tables
+![Models design graphic](zt_test_tables.png)
+*Table designs done in mysql-workbench*
+
 ### Stack
 
 - Ruby 2.3.5
