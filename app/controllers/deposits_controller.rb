@@ -1,4 +1,5 @@
 class DepositsController < ApplicationController
+  include TransfersMailerHelper
   before_action :authenticate_user
 
   def index
@@ -23,14 +24,14 @@ class DepositsController < ApplicationController
   end
 
   def build_deposit(deposits)
-    ret = {}
+    deposits_arr = []
     deposits.each{ |deposit| 
-      ret[deposit[:id]] = {
-        "deposited": deposit[:created_at].strftime("%d/%m/%Y at %I:%M%p"),
+      deposits_arr.push(deposit[:id].to_s => {
+        "deposited": format_time(deposit[:created_at]),
         "amount": deposit[:amount]
-      }
+      })
     }
-    ret
+    deposits_arr 
   end
 
 end
