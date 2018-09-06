@@ -10,7 +10,7 @@ class TransfersController < ApplicationController
       render json: { "messages": "email or phone is required" }, status: :bad_request
       return
     end
-    amount = params[:amount] # if current_user.balance > params[:amount].to_i 
+    amount = params[:amount]
     # todo: handle case when @recipient is nil
     @transfer = current_user.sends.new(
       'recipient_id': @recipient.id,
@@ -19,7 +19,7 @@ class TransfersController < ApplicationController
     if @transfer.save
       render json: @transfer
       # send confirmation email
-      TransfersMailer.with(transfer: @transfer).transfer_notification.deliver_later
+      TransfersMailer.with(transfer: @transfer).transfer_notification.deliver_now
     else
       render json: @transfer.errors.messages, status: :bad_request
     end
@@ -27,7 +27,7 @@ class TransfersController < ApplicationController
 
   def index
     # method should send email of user transfers
-    TransfersMailer.with(user: current_user).transaction_summary.deliver_later
+    TransfersMailer.with(user: current_user).transaction_summary.deliver_now
     render json: { "message": "Email sent" }, status: :accepted
   end
 
