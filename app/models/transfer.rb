@@ -6,7 +6,7 @@ class Transfer < ApplicationRecord
   # validations
   validates :sender_id, :amount, presence: true
   validates :recipient_id, presence: { message: "Recipient not found" }
-  validates :amount, numericality: { only_integer: true }
+  validates :amount, numericality: { only_integer: true, greater_than: 0 }
   validate do |transfer|
     transfer.errors[:amount] << "You have insufficient funds" if transfer.sender.balance < transfer.amount
   end
