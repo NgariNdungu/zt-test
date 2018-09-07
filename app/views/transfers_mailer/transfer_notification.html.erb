@@ -1,4 +1,5 @@
 <p>
 Success: ID: <%= @transfer.id %> <br>
-<%= @transfer.amount %>Kes sent to <%= @transfer.recipient.email %>
+<%= @transfer.amount %>Kes received from <%= @transfer.sender.email %>
+Balance: <%= @transfer.recipient.balance %>
 </p>
