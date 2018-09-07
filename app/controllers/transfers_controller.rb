@@ -10,7 +10,7 @@ class TransfersController < ApplicationController
         'amount': amount
       )
       if @transfer.save
-        render json: {:id => @transfer.id, :recipient => @transfer.recipient.email, :amount => @transfer.amount}
+        render json: {:id => @transfer.id, :recipient => @transfer.recipient.email, :amount => @transfer.amount, :balance => current_user.balance}
         # send confirmation email
         TransfersMailer.with(transfer: @transfer).transfer_notification.deliver_now
       else

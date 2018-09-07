@@ -28,7 +28,8 @@ class DepositsController < ApplicationController
     deposits.each{ |deposit| 
       deposits_arr.push(deposit[:id].to_s => {
         "deposited": format_time(deposit[:created_at]),
-        "amount": deposit[:amount]
+        "amount": deposit[:amount],
+        "balance": current_user.balance
       })
     }
     deposits_arr 
