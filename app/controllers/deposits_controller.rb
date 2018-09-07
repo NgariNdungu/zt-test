@@ -1,5 +1,5 @@
 class DepositsController < ApplicationController
-  include TransfersMailerHelper
+  include TransfersMailerHelper # format_time
   before_action :authenticate_user
 
   def index
@@ -11,7 +11,7 @@ class DepositsController < ApplicationController
     if @deposit.save
       render json: build_deposit([@deposit])
     else
-      render json: @deposit.errors.messages 
+      render json: @deposit.errors.messages, status: :bad_request
     end  
   end
 

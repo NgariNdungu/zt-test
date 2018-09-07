@@ -26,8 +26,7 @@ module TransfersMailerHelper
   def build_transfers(transfers)
     transfers_s = ""
     transfers.each{ |amount, recipient, creation_time|
-      transfers_s += "#{amount} Kes sent to #{User.find(recipient).email} at 
-        #{format_time(creation_time)}\n"
+      transfers_s += "#{amount} Kes sent to #{User.find(recipient).email if recipient} at #{format_time(creation_time)}\n"
     }
     transfers_s
   end
@@ -35,8 +34,7 @@ module TransfersMailerHelper
   def build_receipts(receipts)
     receipts_s = ""
     receipts.each{ |amount, sender, creation_time|
-      receipts_s += "#{amount} Kes received from #{User.find(sender).email} at 
-        #{format_time(creation_time)}\n"
+      receipts_s += "#{amount} Kes received from #{User.find(sender).email if sender} at #{format_time(creation_time)}\n"
     }
     receipts_s
   end

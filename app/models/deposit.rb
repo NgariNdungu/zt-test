@@ -3,7 +3,7 @@ class Deposit < ApplicationRecord
 
   # validations
   validates :user_id, :amount, presence: true
-  validates :amount, numericality: { only_integer: true }
+  validates :amount, numericality: { only_integer: true, greater_than: 0 }
 
   # update user balance after deposit
   after_create :update_balance

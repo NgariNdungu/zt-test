@@ -9,6 +9,7 @@ class Transfer < ApplicationRecord
   validates :amount, numericality: { only_integer: true, greater_than: 0 }
   validate do |transfer|
     transfer.errors[:amount] << "You have insufficient funds" if transfer.sender.balance < transfer.amount
+    transfer.errors[:recipient] << "Sender and recipient must be different" if transfer.sender == transfer.recipient
   end
 
   # update user balances
