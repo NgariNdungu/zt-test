@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   # transfer endpoints
   post 'transfers', to: 'transfers#create'
   get 'transfers', to: 'transfers#index'
+
+  # callback
+  post 'callback', to: 'callback#create'
 end
